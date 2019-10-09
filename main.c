@@ -39,7 +39,7 @@ struct roman_arabic
 
 
 //функция преобразующая римскую цифру в арабскую
-int getArabic(struct roman_arabic *arr, char *roman)
+int getArabic(struct roman_arabic *arr,const  char *roman)
 {
     for(int i = 0; i < 7; i++)
     {
@@ -98,7 +98,7 @@ int convert_roman_to_decimal(const char roman_str[], int *result)
     return 0;//успешное выполнение
 }
 
-void test_convert_roman_to_decimal()
+int test_convert_roman_to_decimal()
 {
     //чтение csv файла с правильныеми значениями перевода римсих цифр в арабские
     FILE *file= fopen("roman.csv", "r");
@@ -115,12 +115,17 @@ void test_convert_roman_to_decimal()
     int fr = 1;
     while (1)
     {
+        res = 0;
        fr =  fscanf(file, "%d;%s\n", &number, str_buffer);
         if (fr == EOF) break;
         status = convert_roman_to_decimal(str_buffer, &res);
         if (!( status == 0 && res == number))
+        {
             printf("Error! %s -> %d (%d)", str_buffer, res, number);
+            return -1;
+        }
 
+        return 0;
     }
     //Проверка на некорректный формат
 
@@ -129,8 +134,8 @@ void test_convert_roman_to_decimal()
 int main()
 {
   //  setlocale(LC_ALL, "");
-    test_convert_roman_to_decimal();
+
    // std::cout << convert_roman_to_decimal("MMMDDDCCCLLLXXXVVVIII");
    //printf("%d",convert_roman_to_decimal("MMMCMXCIX") );
-    return 0;
+    return test_convert_roman_to_decimal();;
 }

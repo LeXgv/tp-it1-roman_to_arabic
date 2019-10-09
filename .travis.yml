@@ -12,4 +12,7 @@ script:
   - cd cmake
   - cmake ../
   - cmake --build .
+  - cmake -DBUILD_TYPE=Debug -P cmake_install.cmake
+  - cd ../bin
   - ls
+  - ./roman
