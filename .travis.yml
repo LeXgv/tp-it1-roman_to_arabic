@@ -1,0 +1,18 @@
+language: c
+sudo: false
+os: linux
+compiler: gcc
+addons:
+  apt:
+    packages:
+      - cmake-data
+      - cmake
+script:
+  - mkdir cmake
+  - cd cmake
+  - cmake ../
+  - cmake --build .
+  - cmake --install .
+  - cd ../bin
+  - ls
+  - ./clion

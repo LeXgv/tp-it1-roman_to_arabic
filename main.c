@@ -11,7 +11,7 @@ L=50
 C=100
 D=500
 M=1000
-Макимальное число повторений одной цифры друг за жругом - 3
+Макимальное число повторений одной цифры друг за другом - 3
 Если меньшая цифра стоит из большей, то она вычитается из большей.
 Пример:
 MMMCMXCIX = (начнем ситать справо на лево) = 10-1+100-10+1000-100+1000+1000+1000=3999
@@ -49,7 +49,7 @@ int getArabic(struct roman_arabic *arr, char *roman)
     return 0;
 }
 
-int convert_roman_to_decimal(char roman_str[])
+int convert_roman_to_decimal(const char roman_str[], int *result)
 {
 
     //std::unordered_map<char, int> roman_value = { {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50},
@@ -59,7 +59,6 @@ int convert_roman_to_decimal(char roman_str[])
                                                         {'M', 1000}};
     int size = strlen(roman_str);
     int modifier = 1; // переменная с помощью которой определяет, складывать или вычитать
-    int result = 0; // результат перевода римских цифр в десятичные
     int before_digit = 0; // преыдущее число, если оно больше текущего то меняем моификатор на -1
     //если равно, то не трогаем модификатор, если оно меньше текущего, то
     // то меняем модификатор на +1
@@ -93,10 +92,10 @@ int convert_roman_to_decimal(char roman_str[])
                 counter = 0;
             }
             else  ++counter; // before_digit == roman_value[*itr]
-            result = result + modifier * arabic_value;
+            *result = *result + modifier * arabic_value;
             before_digit = arabic_value;
         }
-    return result;
+    return 0;//успешное выполнение
 }
 
 void test_convert_roman_to_decimal()
@@ -112,16 +111,16 @@ void test_convert_roman_to_decimal()
     char str_buffer[20];
     int number = 0;
     int res = 0;
+    int status = 0;
     int fr = 1;
     while (1)
     {
        fr =  fscanf(file, "%d;%s\n", &number, str_buffer);
         if (fr == EOF) break;
-        res = convert_roman_to_decimal(str_buffer);
-        if( res != number)
+        status = convert_roman_to_decimal(str_buffer, &res);
+        if (!( status == 0 && res == number))
             printf("Error! %s -> %d (%d)", str_buffer, res, number);
 
-        printf("%d\n", number );
     }
     //Проверка на некорректный формат
 
