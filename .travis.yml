@@ -8,7 +8,10 @@ addons:
       - cmake-data
       - cmake
       - valgrind
+      - python3
 script:
+  - pip install cpplint
+  - cpplint main.c
   - mkdir cmake
   - cd cmake
   - cmake ../
