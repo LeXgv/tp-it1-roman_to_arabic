@@ -6,5 +6,7 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(clion main.c)
 
-INSTALL(TARGETS clion DESTINATION  ${CMAKE_BINARY_DIR}/../bin)
+add_custom_target(target_install
+    ${CMAKE_COMMAND} -E copy file ${directory}/file
+  )
 

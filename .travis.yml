@@ -12,7 +12,4 @@ script:
   - cd cmake
   - cmake ../
   - cmake --build .
-  - cmake --install .
-  - cd ../bin
   - ls
-  - ./clion
