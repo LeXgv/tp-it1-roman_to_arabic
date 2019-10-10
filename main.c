@@ -97,28 +97,61 @@ int test_convert_roman_to_decimal() {
     FILE *file = fopen("roman.csv", "r");
     if (file == NULL) {
         puts("Don't open file!\n");
-        return;
+        return -1;
     }
-
+    printf("Test 1:\n");
     char str_buffer[20];
     int number = 0;
     int res = 0;
     int status = 0;
     int fr = 1;
+    int test_done = 0;
     while (1) {
         res = 0;
        fr =  fscanf(file, "%d;%s\n", &number, str_buffer);
         if (fr == EOF) break;
         status = convert_roman_to_decimal(str_buffer, &res);
         if (!(status == 0 && res == number)) {
-            printf("Error! %s -> %d (%d)", str_buffer, res, number);
-            return -1;
+            test_done = -1;
+            printf("-- fail!  %s -> %d (%d)\n", str_buffer, res, number);
         }
-
-        return 0;
+    }
+    if (test_done == 0) {
+        printf("-- ok\n");
     }
     //Проверка на некорректный формат
+    printf("Test 2:\n");
+    status = convert_roman_to_decimal("MMMM", &res);
+    if(status != -1) {
+        printf("-- fail! [%s] status -> %d (%d) - %s\n " ,
+                "MMMM", status, -1, "string format error");
+        test_done = -1;
+    } else {
+        printf("-- ok\n");
+    }
+
+    printf("Test 3:\n");
+    status = convert_roman_to_decimal("IC", &res);
+    if(status != -3) {
+        printf("-- fail! [%s] status -> %d (%d) - %s \n",
+                "IC", status, -3, "subtraction rule violated");
+        test_done = -1;
+    } else {
+        printf("-- ok\n");
+    }
+
+    printf("Test 4:\n");
+    status = convert_roman_to_decimal("XX=I", &res);
+    if(status != -2) {
+        printf("-- fail! [%s] status -> %d (%d) - %s \n" ,
+                "IC", status, -2, "subtraction rule violated");
+        test_done = -1;
+    } else {
+        printf("-- ok\n");
+    }
+
+    return test_done;
 }
 int main() {
-    return test_convert_roman_to_decimal();;
+    return test_convert_roman_to_decimal();
 }
