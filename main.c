@@ -122,7 +122,7 @@ int test_convert_roman_to_decimal() {
     //Проверка на некорректный формат
     printf("Test 2:\n");
     status = convert_roman_to_decimal("MMMM", &res);
-    if(status != -1) {
+    if (status != -1) {
         printf("-- fail! [%s] status -> %d (%d) - %s\n " ,
                 "MMMM", status, -1, "string format error");
         test_done = -1;
@@ -132,7 +132,7 @@ int test_convert_roman_to_decimal() {
 
     printf("Test 3:\n");
     status = convert_roman_to_decimal("IC", &res);
-    if(status != -3) {
+    if (status != -3) {
         printf("-- fail! [%s] status -> %d (%d) - %s \n",
                 "IC", status, -3, "subtraction rule violated");
         test_done = -1;
@@ -142,7 +142,7 @@ int test_convert_roman_to_decimal() {
 
     printf("Test 4:\n");
     status = convert_roman_to_decimal("XX=I", &res);
-    if(status != -2) {
+    if (status != -2) {
         printf("-- fail! [%s] status -> %d (%d) - %s \n" ,
                 "IC", status, -2, "subtraction rule violated");
         test_done = -1;
