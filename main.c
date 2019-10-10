@@ -114,8 +114,10 @@ int test_convert_roman_to_decimal() {
         if (!(status == 0 && res == number)) {
             test_done = -1;
             printf("-- fail!  %s -> %d (%d)\n", str_buffer, res, number);
+            break;
         }
     }
+    fclose(file);
     if (test_done == 0) {
         printf("-- ok\n");
     }
